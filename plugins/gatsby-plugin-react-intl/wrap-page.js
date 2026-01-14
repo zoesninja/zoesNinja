@@ -63,8 +63,12 @@ var _default = function _default(_ref, pluginOptions) {
   /* eslint-disable no-undef */
   var isRedirect = redirect && !routed;
 
-  // During SSR, always render content (no redirect logic)
+  // During SSR/build, if redirect is needed, render redirect element to match client
   if (typeof window === "undefined") {
+    if (isRedirect) {
+      var _renderElement = GATSBY_INTL_REDIRECT_COMPONENT_PATH && /*#__PURE__*/_react.default.createElement(preferDefault(require(GATSBY_INTL_REDIRECT_COMPONENT_PATH)));
+      return withIntlProvider(intl)(_renderElement);
+    }
     return withIntlProvider(intl)(element);
   }
   if (isRedirect) {
@@ -89,8 +93,8 @@ var _default = function _default(_ref, pluginOptions) {
           replace: true
         });
         // browser should render redirect element
-        var _renderElement = GATSBY_INTL_REDIRECT_COMPONENT_PATH && /*#__PURE__*/_react.default.createElement(preferDefault(require(GATSBY_INTL_REDIRECT_COMPONENT_PATH)));
-        return withIntlProvider(intl)(_renderElement);
+        var _renderElement2 = GATSBY_INTL_REDIRECT_COMPONENT_PATH && /*#__PURE__*/_react.default.createElement(preferDefault(require(GATSBY_INTL_REDIRECT_COMPONENT_PATH)));
+        return withIntlProvider(intl)(_renderElement2);
       }
     }
   }
