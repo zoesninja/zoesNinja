@@ -61,17 +61,11 @@ export default ({ element, props }, pluginOptions) => {
   /* eslint-disable no-undef */
   let isRedirect = redirect && !routed
 
-  // During SSR/build, if redirect is needed, render redirect element to match client
   if (typeof window === "undefined") {
-    if (isRedirect) {
-      const renderElement =
-        GATSBY_INTL_REDIRECT_COMPONENT_PATH &&
-        React.createElement(
-          preferDefault(require(GATSBY_INTL_REDIRECT_COMPONENT_PATH))
-        )
-      return withIntlProvider(intl)(renderElement)
+    const isRootPage = originalPath === "/" || originalPath === ""
+    if (!isRootPage) {
+      return withIntlProvider(intl)(element)
     }
-    return withIntlProvider(intl)(element)
   }
 
   if (isRedirect) {
