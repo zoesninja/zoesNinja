@@ -13,7 +13,6 @@ module.exports = {
     siteUrl: siteUrl,
   },
   plugins: [
-    `gatsby-plugin-preload-fonts`,
     {
       resolve: `gatsby-plugin-react-intl`,
       options: {
@@ -30,7 +29,7 @@ module.exports = {
         fallbackLanguage: `en`,
       },
     },
-    
+
     /* Fetch the markdown files for pages*/
     {
       resolve: `gatsby-source-filesystem`,
@@ -52,10 +51,10 @@ module.exports = {
      * The following two plugins are required if you want to use Gatsby image
      * See https://www.gatsbyjs.com/docs/gatsby-image/#setting-up-gatsby-image
      */
-     `gatsby-plugin-image`,
-     `gatsby-transformer-sharp`,
-     `gatsby-plugin-sharp`,
-    
+    `gatsby-plugin-image`,
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
+
     /* This plugin is used to transform markdown files to HTML */
     {
       resolve: `gatsby-transformer-remark`,
@@ -104,10 +103,36 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-advanced-sitemap`,
+      resolve: `gatsby-plugin-sitemap`,
       options: {
-        hideAttribution: true
-      }
-    }
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+            allSitePage {
+              nodes {
+                path
+                pageContext
+              }
+            }
+          }
+        `,
+        resolveSiteUrl: () => siteUrl,
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+        }) => {
+          return allPages.filter(page => !page.path.includes('/404'))
+        },
+        serialize: ({ path, pageContext }) => {
+          return {
+            url: path,
+            lastmod: new Date().toISOString(),
+          }
+        },
+      },
+    },
   ],
 }
