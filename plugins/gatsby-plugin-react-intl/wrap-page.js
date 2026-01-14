@@ -62,6 +62,11 @@ var _default = function _default(_ref, pluginOptions) {
   }
   /* eslint-disable no-undef */
   var isRedirect = redirect && !routed;
+
+  // During SSR, always render content (no redirect logic)
+  if (typeof window === "undefined") {
+    return withIntlProvider(intl)(element);
+  }
   if (isRedirect) {
     var search = location.search;
 
