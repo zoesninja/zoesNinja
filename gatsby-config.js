@@ -105,6 +105,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
+        createLinkInHead: false,
         query: `
           {
             site {

@@ -7,7 +7,7 @@ import { injectIntl, Link } from "../../plugins/gatsby-plugin-react-intl"
 const Home = ({ intl, location }) => {
   return (
       <Layout isHomePage path={location.pathname} lang={intl.locale}>
-        <Seo title={intl.formatMessage({id: "seo-home-title" })} lang={intl.locale === `zh` ? `zh-HK` : intl.locale} />
+        <Seo title={intl.formatMessage({id: "seo-home-title" })} lang={intl.locale === `zh` ? `zh-HK` : intl.locale} pathname={location.pathname} />
         <h1>{intl.formatMessage({id: "homepage-title" })}</h1>
         <div dangerouslySetInnerHTML={{__html: intl.formatMessage({id: "homepage-p1" })}}></div>
         <LadyPic />

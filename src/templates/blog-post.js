@@ -10,7 +10,7 @@ const BlogPostTemplate = ({ data, location, intl }) => {
   const { siteUrl } = data.site.siteMetadata
   return (
     <Layout path={location.pathname} lang={lang}>
-      <Seo title={title} description={excerpt} lang={lang === `zh` ? `zh-HK` : lang} />
+      <Seo title={title} description={excerpt} lang={lang === `zh` ? `zh-HK` : lang} pathname={location.pathname} />
 
       <article className="blog-post" itemScope itemType="http://schema.org/Article">
         <p className="secondary category">{category}</p>
